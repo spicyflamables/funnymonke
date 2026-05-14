@@ -1,4 +1,4 @@
-loadstring(game:HttpGet("https://raw.githubusercontent.com/spicyflamables/funnymonke/refs/heads/main/item.lua"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/spicyflamables/funnymonke/refs/heads/main/items.lua"))()
 
 local rod = getgenv().inventorystuff["Fishing Pole"]
 
