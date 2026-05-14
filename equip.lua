@@ -2,33 +2,32 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/spicyflamables/funnym
 
 local rod = getgenv().inventorystuff["Fishing Pole"]
 
-if rod and not rod.equipped then
-	local slot = tonumber(rod.slot)
+local actor = game:GetService("Players").LocalPlayer.PlayerScripts.Actor
 
-	print("Fishing Rod | " .. slot) -- fish tekanologia
+run_on_actor(actor, [[
+	local players = game:GetService("Players")
+	local player = players.LocalPlayer
 
-	local vim = game:GetService("VirtualInputManager")
+	local id = ""
 
-	local keys = {
-		[1] = "One",
-		[2] = "Two",
-		[3] = "Three",
-		[4] = "Four",
-		[5] = "Five",
-		[6] = "Six",
-		[7] = "Seven",
-		[8] = "Eight",
-		[9] = "Nine",
-		[0] = "Zero"
-	}
+	local item = player.Backpack:FindFirstChild(id)
 
-	local key = keys[slot]
-
-	if key then
-		vim:SendKeyEvent(true, key, false, game)
-		task.wait(0.05)
-		vim:SendKeyEvent(false, key, false, game)
+	if not item and player.Character then
+		item = player.Character:FindFirstChild(id)
 	end
-else
-	print("already equipped or rod exploded")
-end
+
+	if not item then
+		warn("item not found")
+		return
+	end
+
+	local tool = player.Character.ToolGrip.Tool
+
+	if tool then
+		print("found tool")
+		tool:FireServer(item, true)
+		print("fired remote")
+	else
+		warn("tool not found")
+	end
+]])
