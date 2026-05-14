@@ -12,7 +12,7 @@ for _, v in ipairs(inventory:GetDescendants()) do
 
 			for _, data in pairs(items) do
 				if typeof(data) == "table" and data.HotbarThumb == id then
-					getgenv().inventorystuff[data.Name] = true
+					getgenv().inventorystuff[data.Name] = v.Name
 				end
 			end
 		end
