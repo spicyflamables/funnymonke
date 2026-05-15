@@ -1,31 +1,42 @@
-loadstring(game:HttpGet("https://raw.githubusercontent.com/spicyflamables/funnymonke/main/items.lua"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/spicyflamables/funnymonke/refs/heads/main/item.lua"))()
 
-local itemname = getgenv().inventorystuff["Wallet"]
+local rod = getgenv().inventorystuff["Fishing Pole"]
 
-local player = game:GetService("Players").LocalPlayer
-local actor = player.PlayerScripts.Actor
+if typeof(rod) == "table" then
+	local slot = tonumber(rod.slot)
 
-run_on_actor(actor, string.format([[
-	local player = game:GetService("Players").LocalPlayer
+	if slot then
+		print("Fishing Pole | " .. slot)
 
-	local item = player.Backpack:FindFirstChild("%s")
+		if not rod.equipped then
+			local vim = game:GetService("VirtualInputManager")
 
-	if not item and player.Character then
-		item = player.Character:FindFirstChild("%s")
+			local keys = {
+				[1] = "One",
+				[2] = "Two",
+				[3] = "Three",
+				[4] = "Four",
+				[5] = "Five",
+				[6] = "Six",
+				[7] = "Seven",
+				[8] = "Eight",
+				[9] = "Nine",
+				[0] = "Zero"
+			}
+
+			local key = keys[slot]
+
+			if key then
+				vim:SendKeyEvent(true, key, false, game)
+				task.wait(0.05)
+				vim:SendKeyEvent(false, key, false, game)
+
+				print("equipped fishing pole") -- fish tekanologia
+			end
+		else
+			print("already equipped")
+		end
 	end
-
-	if not item then
-		warn("item not found")
-		return
-	end
-
-	local tool = player.Character.ToolGrip.Tool
-
-	if tool then
-		print("found tool")
-		tool:FireServer(item, true)
-		print("fired remote")
-	else
-		warn("tool not found")
-	end
-]], itemname, itemname))
+else
+	warn("fishing pole not found")
+end
